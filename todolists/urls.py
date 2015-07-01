@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-
+#flows goes from | test.py->look for in url.py->look for view of url in view.py
 urlpatterns = [
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^$','lists.views.home_page',name='home') #^$ is root's url
+    # if we comment out following our test will give us resolver404 error
+    url(r'^$','lists.views.home_page',name='home') #^$ is root's url, send requests to home_page view
 ]
