@@ -23,24 +23,13 @@ class NewVisitorTest(unittest.TestCase):
         self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
 
         inputbox.send_keys('Buy peacock feathers') # this will type automatiaclly into inputbox
-
         inputbox.send_keys(Keys.ENTER)
 
         table= self.browser.find_element_by_id('id_list_table')
-        print(table.text)
-        rows=[self.browser.find_element_by_tag_name('tr')]
-        self.assertTrue(
-            any(row.text == '1:Buy peacock feathers' for row in rows),
-            "New to-do item did not appear in table"
-        )
-
-        time.sleep(10)
-
-        
-
-
-
+        rows=[table.find_element_by_tag_name('tr')]
+        self.assertIn('1: Buy peacock feathers',[row.text for row in rows])
         #self.fail('finsh the Test')
+    
 
 if __name__=='__main__':
     unittest.main(warnings='ignore')

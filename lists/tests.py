@@ -17,14 +17,20 @@ class HomePageTest(TestCase):
         #print(request) #scheme :http or https, POST:QueryDict:{},path:,method,resolver_match,''' get_host()'''
 
         response=home_page(request)#home_page view returns HttpResponse
-        print (response.content.decode())# returns byte object
-        
-        expected_html=render_to_string('home.html')
-        #print(expected_html,' \n',response.content.decode())
+        #print (response.content.decode())# returns byte object
+
+    def test_home_page_can_save_a_POST_request(self):
+        request=HttpRequest()
+        request.method="POST"
+        request.POST["item_text"]='A new list item'
+        response= home_page(request)
+        self.assertIn('A new list item',response.content.decode())      
+        #print (response.content.decode())# returns byte object
+        expected_html=render_to_string('home.html',
+            {'new_item_text':'A new list item'}
+        )
         self.assertEqual(response.content.decode(),expected_html)
+  
         
-        '''self.assertTrue(response.content.strip( ).startswith(b'<html>'))# content:html send to user
-        self.assertIn(b'<title>To-do lists</title>',response.content)
-        self.assertTrue(response.content.strip().endswith(b'</html>'))# content:html send to user'''
 
 
