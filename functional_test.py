@@ -1,5 +1,6 @@
 from selenium import webdriver
-import unittest
+from selenium.webdriver.common.keys import Keys
+import unittest,time
 
 #Django receives the HTTp request, decides which view will handle it, view sends the response
 class NewVisitorTest(unittest.TestCase):
@@ -13,8 +14,33 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         self.browser.get('http://localhost:8000')
-        self.assertIn('Django',self.browser.title)
-        self.fail('finsh the Test')
+        self.assertIn('To-do',self.browser.title)
+
+        header_text=self.browser.find_element_by_tag_name('h1').text # get inside text of <h1>
+        self.assertIn('To-do',header_text)
+
+        inputbox=self.browser.find_element_by_id('id_new_item')
+        self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
+
+        inputbox.send_keys('Buy peacock feathers') # this will type automatiaclly into inputbox
+
+        inputbox.send_keys(Keys.ENTER)
+
+        table= self.browser.find_element_by_id('id_list_table')
+        print(table.text)
+        rows=[self.browser.find_element_by_tag_name('tr')]
+        self.assertTrue(
+            any(row.text == '1:Buy peacock feathers' for row in rows),
+            "New to-do item did not appear in table"
+        )
+
+        time.sleep(10)
+
+        
+
+
+
+        #self.fail('finsh the Test')
 
 if __name__=='__main__':
     unittest.main(warnings='ignore')
