@@ -1,4 +1,4 @@
-"""todolists URL Configuration
+"""todolists URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
@@ -14,10 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
-from django.contrib import admin
-#flows goes from | test.py->look for in url.py->look for view of url in view.py
+# from django.contrib import admin
+# flows goes from | test.py->look for in url.py->look for view of url in
+# view.py
 urlpatterns = [
-    #url(r'^admin/', include(admin.site.urls)),
+    # url(r'^admin/', include(admin.site.urls)),
     # if we comment out following our test will give us resolver404 error
-    url(r'^$','lists.views.home_page',name='home') #^$ is root's url, send requests to home_page view
+    # ^$ is root's url, send requests to home_page view
+    url(r'^$', 'lists.views.home_page', name='home')
 ]
