@@ -40,6 +40,8 @@ class HomePageTest(TestCase):
         
         self.assertEqual(response.status_code,302)
         self.assertEqual(response['location'],'/')
+    def test_home_page_displays_all_list_items(self):
+        Item.objects
 
 
     def test_home_page_only_saves_items_when_necessary(self):
