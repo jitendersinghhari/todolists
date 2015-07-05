@@ -24,11 +24,6 @@ class HomePageTest(TestCase):
         response = home_page(request)  # home_page view returns HttpResponse
         # print (response.content.decode())# returns byte object
 
-    def test_home_page_only_saves_items_when_necessary(self):
-        request = HttpRequest()
-        home_page(request)
-        self.assertEqual(Item.objects.count(), 0)
-
 
 class ItemModelTest(TestCase):
 
