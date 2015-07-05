@@ -63,7 +63,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Buy milk', page_text)
         time.sleep(4)
 
-        self.fail('finsh the Test')
+        # self.fail('finsh the Test')
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
