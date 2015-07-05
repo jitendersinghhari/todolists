@@ -2,7 +2,7 @@ from selenium import webdriver
 from django.test import LiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 # import unittest
-# import time
+import time
 
 
 # Django receives the HTTp request, decides which view will handle it,
@@ -40,6 +40,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.check_for_row_in_list_table(
             '2: Use peacock feathers to make a fly')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
+        time.sleep(4)
 
         self.browser.quit()
         self.browser = webdriver.Firefox()
@@ -51,6 +52,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
+        time.sleep(4)
 
         francis_list_url = self.browser.current_url
         self.assertRegex(francis_list_url, '/lists/.+')
@@ -59,10 +61,11 @@ class NewVisitorTest(LiveServerTestCase):
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
+        time.sleep(4)
 
         self.fail('finsh the Test')
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
-        rows = [table.find_element_by_tag_name('tr')]
+        rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])

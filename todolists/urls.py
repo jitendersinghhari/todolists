@@ -21,5 +21,6 @@ urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
     # if we comment out following our test will give us resolver404 error
     # ^$ is root's url, send requests to home_page view
-    url(r'^$', 'lists.views.home_page', name='home')
+    url(r'^$', 'lists.views.home_page', name='home'),
+    url(r'^lists/the-only-list-in-the-world/$','lists.views.view_list',name='view_list'),
 ]
