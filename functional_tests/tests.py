@@ -1,5 +1,5 @@
 from selenium import webdriver
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 # import unittest
 import time
@@ -8,7 +8,7 @@ import time
 # Django receives the HTTp request, decides which view will handle it,
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -75,9 +75,9 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser.set_window_size(1024, 768)
 
         # inputbox.send_keys('testing\n')
-        inputbox=self.browser.find_element_by_id('id_new_item')
+        inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertAlmostEqual(
-             inputbox.location['x']+inputbox.size['width'] / 2,
+             inputbox.location['x'] + inputbox.size['width'] / 2,
              512,
              delta=5
         )
