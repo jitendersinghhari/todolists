@@ -3,12 +3,29 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 # import unittest
 import time
+import sys
 
 
 # Django receives the HTTp request, decides which view will handle it,
 
 
 class NewVisitorTest(StaticLiveServerTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        for arg in sys.argv:
+            print("i am in- ", arg)
+            if 'liveserver' in arg:
+                cls.server_url = 'http://' + arg.split('=')[1]
+                print(cls.server_url)
+                return
+        super().setUpClass()
+        cls.server_url = cls.live_server_url
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls.server_url == cls.live_server_url:
+            super().tearDownClass()
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -18,7 +35,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.browser.quit()
 
     def test_can_start_a_list_and_retrieve_it_later(self):
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         self.assertIn('To-do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name(
             'h1').text  # get inside text of <h1>
@@ -44,7 +61,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         self.browser.quit()
         self.browser = webdriver.Firefox()
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('make a fly', page_text)
@@ -71,7 +88,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.assertIn(row_text, [row.text for row in rows])
 
     def test_layout_and_styling(self):
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         self.browser.set_window_size(1024, 768)
 
         # inputbox.send_keys('testing\n')
